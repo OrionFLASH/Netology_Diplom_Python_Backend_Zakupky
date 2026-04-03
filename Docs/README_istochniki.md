@@ -1,9 +1,25 @@
-# Исходные материалы задания
+# Исходные материалы учебного задания
 
-- Репозиторий курса Netology: https://github.com/netology-code/python-final-diplom  
-- Учебный пример для сверки структуры API: https://github.com/netology-code/python-final-diplom/tree/master/reference/netology_pd_diplom  
-- Документация Postman (ориентир по запросам): https://documenter.getpostman.com/view/5037826/SVfJUrSc  
+Дипломная работа выполняется по программе Netology «Python-разработчик» (модуль финального проекта по backend для автоматизации закупок).
 
-В каталоге `data/` этого репозитория размещён файл `shop1.yaml` из учебного репозитория для проверки импорта.
+## Официальные ссылки
 
-Текст этапов и моделей также доступен в официальном `README.md` и файлах `reference/*.md` репозитория задания.
+| Ресурс | URL |
+|--------|-----|
+| Репозиторий с формулировкой задания, этапами и вложениями | https://github.com/netology-code/python-final-diplom |
+| Пример для сверки структуры API и сущностей (не копировать как готовую работу) | https://github.com/netology-code/python-final-diplom/tree/master/reference/netology_pd_diplom |
+| Документация Postman по запросам (ориентир для ручного тестирования) | https://documenter.getpostman.com/view/5037826/SVfJUrSc |
+
+В репозитории задания также находятся:
+
+- **`reference/screens.md`** — описание экранов и полей API с точки зрения сценария.  
+- **`reference/step-1.md` … `step-5.md`** — этапы базовой части.  
+- **`reference/step-6-adv.md`**, **`step-7-adv.md`** — продвинутая часть (админка, Celery).  
+- **`reference/service.md`** — описание сущностей и процесса заказа.  
+- **`data/shop1.yaml`** — образец прайса (в данном проекте дубликат лежит в **`data/shop1.yaml`**).
+
+## Документация собственной реализации
+
+Сводный указатель: **[INDEX.md](./INDEX.md)**.
+
+Там перечислены файлы с подробным описанием архитектуры, API, развёртывания, импорта/экспорта, логирования и тестов.
