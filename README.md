@@ -156,3 +156,4 @@ pytest src/Tests -v
 | 0.5.1 | Исправление `PYTHONPATH` в Docker для воркера Celery |
 | **0.6.0** | Расширенная документация в `Docs/`, обновление README |
 | **0.6.1** | Корзина: поддержка `items` как JSON-массива; доп. автотест; уточнение `Docs/API.md` |
+| **0.6.2** | Расширенные pytest: партнёр API, `admin/import_task` (eager Celery), `PUT /order` для staff |

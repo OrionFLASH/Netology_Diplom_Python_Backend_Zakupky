@@ -21,7 +21,10 @@ pytest src/Tests -q
 
 ### 1.2. Фикстуры
 
-**`src/Tests/conftest.py`** подменяет **`EMAIL_BACKEND`** на **`locmem`**, чтобы в тестах можно было проверять **`django.core.mail.outbox`**.
+**`src/Tests/conftest.py`**:
+
+- подменяет **`EMAIL_BACKEND`** на **`locmem`**, чтобы проверять **`django.core.mail.outbox`**;
+- включает **`CELERY_TASK_ALWAYS_EAGER`**, чтобы вызовы **`.delay()`** выполнялись в том же процессе (без Redis в автотестах).
 
 ### 1.3. Сценарии в `test_buyer_flow.py`
 
@@ -43,7 +46,25 @@ pytest src/Tests -q
 
 Проверяет, что **`POST /basket`** принимает **`items`** как **массив** в JSON (не только как вложенную JSON-строку).
 
-### 1.4. Запуск тестов в Docker
+### 1.4. Сценарии в `test_partner_and_staff.py`
+
+#### `test_partner_state_export_orders_and_update`
+
+Магазин после импорта прайса: **`GET /partner/state`**, **`GET /partner/export`** (наличие YAML), пустой **`GET /partner/orders`**. Затем полный цикл покупателя до **`POST /order`** — у магазина в **`GET /partner/orders`** один заказ со статусом **`new`**. Далее **`POST /partner/state`** и **`POST /partner/update`** с заглушкой **`import_price_from_url`** (без реального HTTP).
+
+#### `test_staff_put_order_status_and_buyer_forbidden`
+
+Заказ в статусе **`new`**: покупателю **`PUT /order`** возвращает **403**; пользователю с **`is_staff=True`** — **200** и смена статуса на **`confirmed`**.
+
+#### `test_admin_import_task_eager_runs_import`
+
+**`POST /admin/import_task`** под учётной записью персонала: ответ с **`task_id`**, в eager-режиме вызывается **`import_price_from_url`** (заглушка).
+
+#### `test_partner_endpoints_forbidden_for_buyer`
+
+Покупатель получает **403** на **`GET /partner/state`**, **`/partner/orders`**, **`/partner/export`** и **`POST /partner/update`**.
+
+### 1.5. Запуск тестов в Docker
 
 ```bash
 docker compose run --rm web pytest src/Tests -v
