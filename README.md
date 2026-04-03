@@ -119,11 +119,13 @@ API: **http://127.0.0.1:8000/api/v1/**
 
 ## Тестирование
 
+Автотесты: **6** сценариев в **`src/Tests/test_buyer_flow.py`** (покупатель, корзина) и **`test_partner_and_staff.py`** (партнёр, персонал, Celery-импорт).
+
 ```bash
 pytest src/Tests -v
 ```
 
-Описание сценария и ручного чек-листа — **[Docs/TESTING.md](Docs/TESTING.md)**.
+Описание фикстур, сценариев и ручного чек-листа — **[Docs/TESTING.md](Docs/TESTING.md)**.
 
 ---
 
@@ -157,3 +159,4 @@ pytest src/Tests -v
 | **0.6.0** | Расширенная документация в `Docs/`, обновление README |
 | **0.6.1** | Корзина: поддержка `items` как JSON-массива; доп. автотест; уточнение `Docs/API.md` |
 | **0.6.2** | Расширенные pytest: партнёр API, `admin/import_task` (eager Celery), `PUT /order` для staff |
+| **0.6.3** | Документация: явное указание 6 автотестов и вариантов запуска pytest в Docker |

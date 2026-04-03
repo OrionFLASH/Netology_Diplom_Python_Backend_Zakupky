@@ -19,6 +19,8 @@ pytest src/Tests -q
 
 Конфигурация: **`pytest.ini`** (`DJANGO_SETTINGS_MODULE=zakupki.settings`, `pythonpath = . src`).
 
+В репозитории собрано **6** автотестов в двух файлах: **`test_buyer_flow.py`** и **`test_partner_and_staff.py`** (см. п. 1.3–1.4).
+
 ### 1.2. Фикстуры
 
 **`src/Tests/conftest.py`**:
@@ -66,11 +68,19 @@ pytest src/Tests -q
 
 ### 1.5. Запуск тестов в Docker
 
+Если стек уже поднят (**`docker compose up -d`**):
+
+```bash
+docker compose exec web pytest src/Tests -v
+```
+
+Одноразовый контейнер (после **`docker compose build`**):
+
 ```bash
 docker compose run --rm web pytest src/Tests -v
 ```
 
-Требуется собранный образ **`web`** и доступность Redis, если compose поднимает зависимости автоматически для `run`.
+Для **`run`** может понадобиться доступность **Redis** в профиле compose; для **`exec`** достаточно работающего сервиса **`web`**.
 
 ---
 

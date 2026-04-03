@@ -10,7 +10,7 @@
 | [DEPLOYMENT.md](./DEPLOYMENT.md) | Установка на macOS, Linux, Windows; Docker; Celery; переменные окружения |
 | [IMPORT_EXPORT.md](./IMPORT_EXPORT.md) | Формат YAML, команда `import_shop_yaml`, API импорта и экспорта |
 | [LOGGING.md](./LOGGING.md) | Настройка логов, формат DEBUG, маскирование персональных данных |
-| [TESTING.md](./TESTING.md) | Автотесты, ручные сценарии, проверка email и логов |
+| [TESTING.md](./TESTING.md) | Автотесты (6 сценариев), ручные проверки, Docker, email и логи |
 | [README_istochniki.md](./README_istochniki.md) | Ссылки на репозиторий задания Netology и Postman |
 
 Все тексты в каталоге `Docs/` и корневой `README.md` составлены в рамках учебного дипломного проекта.
