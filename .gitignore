@@ -1,0 +1,39 @@
+# Виртуальные окружения и секреты
+.env
+.venv/
+venv/
+env/
+ENV/
+
+# IDE
+.idea/
+.vscode/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.mypy_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Django / локальная БД
+*.sqlite3
+db.sqlite3
+media/
+staticfiles/
+
+# Логи приложения (файлы ротации не коммитим)
+log/*.log
+
+# Celery
+celerybeat-schedule
+celerybeat-schedule.*
+
+# Прочее
+.DS_Store
+*.swp

@@ -1,0 +1,38 @@
+# Сборка: docker compose up --build
+# Сервисы: Redis (брокер Celery), веб (Django), воркер фоновых задач.
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      DJANGO_SECRET_KEY: docker-compose-dev-key
+      DJANGO_DEBUG: "True"
+      DJANGO_ALLOWED_HOSTS: "*"
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/0
+      EMAIL_BACKEND: django.core.mail.backends.console.EmailBackend
+    depends_on:
+      - redis
+
+  celery:
+    build: .
+    command: celery -A zakupki worker -l info
+    volumes:
+      - .:/app
+    environment:
+      DJANGO_SECRET_KEY: docker-compose-dev-key
+      DJANGO_DEBUG: "True"
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/0
+      EMAIL_BACKEND: django.core.mail.backends.console.EmailBackend
+    depends_on:
+      - redis
