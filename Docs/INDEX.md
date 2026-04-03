@@ -12,5 +12,6 @@
 | [LOGGING.md](./LOGGING.md) | Настройка логов, формат DEBUG, маскирование персональных данных |
 | [TESTING.md](./TESTING.md) | Автотесты (6 сценариев), ручные проверки, Docker, email и логи |
 | [README_istochniki.md](./README_istochniki.md) | Ссылки на репозиторий задания Netology и Postman |
+| [COMPLIANCE_NETOLOGY.md](./COMPLIANCE_NETOLOGY.md) | Сверка с критериями и этапами из репозитория задания Netology |
 
 Все тексты в каталоге `Docs/` и корневой `README.md` составлены в рамках учебного дипломного проекта.

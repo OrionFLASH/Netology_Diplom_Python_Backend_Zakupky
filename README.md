@@ -17,6 +17,7 @@
 | [Docs/LOGGING.md](Docs/LOGGING.md) | Файлы логов, формат DEBUG, маскирование ПДн |
 | [Docs/TESTING.md](Docs/TESTING.md) | Pytest, ручные сценарии, проверка Celery |
 | [Docs/README_istochniki.md](Docs/README_istochniki.md) | Ссылки на репозиторий задания и Postman |
+| [Docs/COMPLIANCE_NETOLOGY.md](Docs/COMPLIANCE_NETOLOGY.md) | Соответствие этапам и критериям из [python-final-diplom](https://github.com/netology-code/python-final-diplom) |
 
 ---
 
@@ -29,7 +30,8 @@
 - Логи с **маскированием** чувствительных данных.  
 - Продвинутая часть: экспорт YAML, админка, Celery, docker-compose.
 
-Первоисточник формулировок: репозиторий курса (см. `Docs/README_istochniki.md`).
+Первоисточник формулировок: репозиторий курса (см. `Docs/README_istochniki.md`).  
+Построчная сверка с этапами и продвинутой частью: **`Docs/COMPLIANCE_NETOLOGY.md`**.
 
 ---
 
@@ -160,3 +162,4 @@ pytest src/Tests -v
 | **0.6.1** | Корзина: поддержка `items` как JSON-массива; доп. автотест; уточнение `Docs/API.md` |
 | **0.6.2** | Расширенные pytest: партнёр API, `admin/import_task` (eager Celery), `PUT /order` для staff |
 | **0.6.3** | Документация: явное указание 6 автотестов и вариантов запуска pytest в Docker |
+| **0.6.4** | Документ сверки с заданием Netology: `Docs/COMPLIANCE_NETOLOGY.md` |
