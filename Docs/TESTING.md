@@ -23,9 +23,11 @@ pytest src/Tests -q
 
 **`src/Tests/conftest.py`** подменяет **`EMAIL_BACKEND`** на **`locmem`**, чтобы в тестах можно было проверять **`django.core.mail.outbox`**.
 
-### 1.3. Сценарий `test_buyer_registration_login_and_order`
+### 1.3. Сценарии в `test_buyer_flow.py`
 
-Файл **`src/Tests/test_buyer_flow.py`**. Последовательность:
+#### `test_buyer_registration_login_and_order`
+
+Последовательность:
 
 1. Регистрация покупателя через **`POST /api/v1/user/register`**.  
 2. Подтверждение email токеном из модели **`ConfirmEmailToken`**.  
@@ -36,6 +38,10 @@ pytest src/Tests -q
 7. Подтверждение заказа (**`POST /order`**).  
 8. Проверка, что в **`mail.outbox`** есть хотя бы одно письмо.  
 9. Проверка списка заказов (**`GET /order`**) на наличие статуса **`new`**.
+
+#### `test_basket_accepts_items_as_json_array`
+
+Проверяет, что **`POST /basket`** принимает **`items`** как **массив** в JSON (не только как вложенную JSON-строку).
 
 ### 1.4. Запуск тестов в Docker
 

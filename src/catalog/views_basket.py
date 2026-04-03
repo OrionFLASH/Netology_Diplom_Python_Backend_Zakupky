@@ -21,6 +21,29 @@ from catalog.serializers import OrderItemSerializer, OrderSerializer
 logger: logging.Logger = logging.getLogger("catalog")
 
 
+def _parse_basket_items_payload(raw: object) -> list[dict[str, object]] | None:
+    """
+    Разбор поля items для POST/PUT корзины.
+
+    Поддерживаются оба варианта (как в учебном API и как у типичных JSON-клиентов):
+    - строка с JSON-массивом внутри;
+    - уже распарсенный список объектов в теле application/json.
+    """
+    if raw is None:
+        return None
+    if isinstance(raw, list):
+        return raw  # type: ignore[return-value]
+    if isinstance(raw, str):
+        try:
+            data: object = load_json(raw)
+        except ValueError:
+            return None
+        if isinstance(data, list):
+            return data  # type: ignore[return-value]
+        return None
+    return None
+
+
 class BasketView(APIView):
     """Просмотр корзины и изменение состава через items (JSON-строка, как в учебном API)."""
 
@@ -55,14 +78,9 @@ class BasketView(APIView):
         if not request.user.is_authenticated:
             return JsonResponse({"Status": False, "Error": "Log in required"}, status=403)
 
-        items_string: str | None = request.data.get("items")
-        if not items_string:
+        items_dict: list[dict[str, object]] | None = _parse_basket_items_payload(request.data.get("items"))
+        if not items_dict:
             return JsonResponse({"Status": False, "Errors": "Не указаны все необходимые аргументы"})
-
-        try:
-            items_dict: list[dict[str, object]] = load_json(items_string)
-        except ValueError:
-            return JsonResponse({"Status": False, "Errors": "Неверный формат запроса"})
 
         basket, _ = Order.objects.get_or_create(user_id=request.user.id, state=OrderState.BASKET)
         objects_created: int = 0
@@ -89,11 +107,17 @@ class BasketView(APIView):
         if not request.user.is_authenticated:
             return JsonResponse({"Status": False, "Error": "Log in required"}, status=403)
 
-        items_string: str | None = request.data.get("items")
-        if not items_string:
+        raw_items: object = request.data.get("items")
+        items_list: list[str]
+        if isinstance(raw_items, list):
+            items_list = [str(x).strip() for x in raw_items]
+        elif isinstance(raw_items, str):
+            items_list = raw_items.split(",")
+        else:
             return JsonResponse({"Status": False, "Errors": "Не указаны все необходимые аргументы"})
 
-        items_list: list[str] = items_string.split(",")
+        if not items_list or (len(items_list) == 1 and not str(items_list[0]).strip()):
+            return JsonResponse({"Status": False, "Errors": "Не указаны все необходимые аргументы"})
         basket, _ = Order.objects.get_or_create(user_id=request.user.id, state=OrderState.BASKET)
         query: Q = Q()
         objects_deleted: bool = False
@@ -111,14 +135,9 @@ class BasketView(APIView):
         if not request.user.is_authenticated:
             return JsonResponse({"Status": False, "Error": "Log in required"}, status=403)
 
-        items_string: str | None = request.data.get("items")
-        if not items_string:
+        items_dict: list[dict[str, object]] | None = _parse_basket_items_payload(request.data.get("items"))
+        if not items_dict:
             return JsonResponse({"Status": False, "Errors": "Не указаны все необходимые аргументы"})
-
-        try:
-            items_dict: list[dict[str, object]] = load_json(items_string)
-        except ValueError:
-            return JsonResponse({"Status": False, "Errors": "Неверный формат запроса"})
 
         basket, _ = Order.objects.get_or_create(user_id=request.user.id, state=OrderState.BASKET)
         objects_updated: int = 0

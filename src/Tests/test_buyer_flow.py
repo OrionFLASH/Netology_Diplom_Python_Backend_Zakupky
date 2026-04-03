@@ -104,3 +104,51 @@ def test_buyer_registration_login_and_order() -> None:
     payload = orders.json()
     assert isinstance(payload, list)
     assert any(row["state"] == OrderState.NEW for row in payload)
+
+
+@pytest.mark.django_db
+def test_basket_accepts_items_as_json_array() -> None:
+    """
+    Поле items в POST /basket может быть не только JSON-строкой (учебный вариант),
+    но и массивом в теле application/json (типичные HTTP-клиенты).
+    """
+    client = APIClient()
+    base = "/api/v1"
+    shop_user = User.objects.create_user(
+        email="shop2@example.com",
+        password="ShopPass123!!",
+        first_name="М",
+        last_name="С",
+        type=UserType.SHOP,
+        is_active=True,
+    )
+    yaml_path = Path(__file__).resolve().parents[2] / "data" / "shop1.yaml"
+    import_price_from_bytes(yaml_path.read_bytes(), int(shop_user.id))
+
+    from catalog.models import ProductInfo
+
+    pi = ProductInfo.objects.first()
+    assert pi is not None
+
+    buyer = User.objects.create_user(
+        email="buyer2@example.com",
+        password="ComplexPass123!",
+        first_name="П",
+        last_name="К",
+        type=UserType.BUYER,
+        is_active=True,
+    )
+    login = client.post(
+        base + "/user/login",
+        {"email": buyer.email, "password": "ComplexPass123!"},
+        format="json",
+    )
+    client.credentials(HTTP_AUTHORIZATION=f"Token {login.json()['Token']}")
+
+    response = client.post(
+        base + "/basket",
+        {"items": [{"product_info": pi.id, "quantity": 2}]},
+        format="json",
+    )
+    assert response.status_code == 200
+    assert response.json()["Status"] is True
