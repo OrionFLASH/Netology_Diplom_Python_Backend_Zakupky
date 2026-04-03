@@ -84,7 +84,7 @@ API: **http://127.0.0.1:8000/api/v1/**
 | GET/POST/PUT/DELETE | `/api/v1/user/contact` | Адреса (макс. 5) |
 | GET | `/api/v1/categories`, `/api/v1/shops` | Справочники |
 | GET | `/api/v1/products` | Каталог (`shop_id`, `category_id`) |
-| GET/POST/PUT/DELETE | `/api/v1/basket` | Корзина (`items` — JSON-строка) |
+| GET/POST/PUT/DELETE | `/api/v1/basket` | Корзина (`items` — JSON-строка или массив объектов) |
 | GET/POST | `/api/v1/order` | Список/подтверждение заказа |
 | PUT | `/api/v1/order` | Статус заказа (только staff) |
 | POST | `/api/v1/partner/update` | Импорт прайса по URL (shop) |
