@@ -61,6 +61,8 @@ docker compose up --build
 Веб: порт `8000`, Redis: `6379`. Перед первым запуском выполните миграции внутри контейнера:  
 `docker compose exec web python manage.py migrate`.
 
+В `Dockerfile` задано `PYTHONPATH=/app/src:/app`, чтобы процесс `celery` (он не проходит через `manage.py`) корректно импортировал пакет `catalog`.
+
 ### Переменные окружения (`.env`)
 
 | Переменная | Назначение |

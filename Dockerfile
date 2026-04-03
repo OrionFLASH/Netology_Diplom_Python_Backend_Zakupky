@@ -3,6 +3,8 @@ FROM python:3.12-slim-bookworm
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
+# manage.py добавляет src в sys.path; воркер Celery стартует без manage.py — задаём PYTHONPATH явно.
+ENV PYTHONPATH=/app/src:/app
 
 WORKDIR /app
 
